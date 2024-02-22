@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    <form>
+        <label for="name">string:</label><br>
+        <input type="text" id="name" name="nombre"><br>
+
+        <!-- para que la pagina no se refresque lo ponemos tipo button -->
+        <button type="button" onclick="realizarLlamadaAjax('darVuelta')">Darle la vuelta al string</button>
+        <button type="button" onclick="realizarLlamadaAjax('aMayusculas')">Pasarlo a mayúsculas</button>
+        <button type="button" onclick="realizarLlamadaAjax('aMinusculas')">Pasarlo a minúsculas</button>
+        <button type="button" onclick="realizarLlamadaAjax('contarLetras')">Contar las letras</button>
+    </form>
+
+    <div id="mensaje"></div>
+
+    <script>
+
+        var xhr = new XMLHttpRequest();
+        function realizarLlamadaAjax(accion) {
+        var nombre = document.getElementById("name").value;
+        
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById("mensaje").textContent = xhr.responseText;
+            }
+        };
+
+        xhr.open("GET", "index.php?nombre=" + encodeURIComponent(nombre) + "&accion="+encodeURIComponent(accion) , true);
+        xhr.send();
+    }
+    </script>
+</body>
+</html>
